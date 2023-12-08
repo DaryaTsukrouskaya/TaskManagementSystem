@@ -57,3 +57,13 @@ create table if not exists task_management_system.comments(
     references task_management_system.tasks (id)
     on delete cascade
     on update cascade);
+
+    create table if not exists  task_management_system.refresh_tokens(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    token VARCHAR(300) NOT NULL,
+    username VARCHAR(64) NOT NULL,
+    CONSTRAINT FK_refresh_tokens_username_users_email
+    FOREIGN KEY (username)
+    REFERENCES task_management_system.users (email)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
