@@ -15,6 +15,7 @@ create table if not exists task_management_system.tasks(
     title varchar(60) not null,
     description varchar(2000) not null,
     status varchar(30) not null,
+    priority varchar(30) not null,
     creation_date datetime not null,
     author_id int not null,
     primary key(id),
@@ -43,6 +44,7 @@ drop table if exists task_management_system.comments;
 create table if not exists task_management_system.comments(
     id int not null,
     comment_text varchar(500) not null,
+    date datetime not null,
     user_id int not null,
     task_id int not null,
     primary key(id),
