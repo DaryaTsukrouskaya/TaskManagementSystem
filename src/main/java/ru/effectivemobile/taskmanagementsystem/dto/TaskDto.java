@@ -9,8 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import ru.effectivemobile.taskmanagementsystem.entities.Comment;
-import ru.effectivemobile.taskmanagementsystem.entities.User;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,7 +32,7 @@ public class TaskDto {
     @NotBlank(message = "статус задачи не должен быть пустым")
     private String status;
 
-    @Pattern(regexp = "^[а-яА-Яa-zA-Z]+$", message = "некорректный ghbjhbntn")
+    @Pattern(regexp = "^[а-яА-Яa-zA-Z]+$", message = "некорректный приоритет")
     @NotBlank(message = "приоритет задачи не должен быть пустым")
     private String priority;
     @Past(message = "указанная дата  еще не наступила")

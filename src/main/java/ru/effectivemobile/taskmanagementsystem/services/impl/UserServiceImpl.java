@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserConverter userConverter;
 
-    public List<User> getPerformers(List<String> performers) {
+    public List<User> findPerformers(List<String> performers) {
         return userRepository.findAllByEmailIn(performers);
     }
 
