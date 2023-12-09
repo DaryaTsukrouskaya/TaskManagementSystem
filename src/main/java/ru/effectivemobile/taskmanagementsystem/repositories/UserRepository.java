@@ -15,9 +15,10 @@ import java.util.Optional;
 @Transactional
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    User findByEmailAndPassword(String email, String password);
     Optional<User> findByEmail(String email);
+
     User findById(int id);
+
     @Query("select u from User u where u.email in :performers")
     List<User> findAllByEmailIn(@Param("performers") List<String> performers);
 }
