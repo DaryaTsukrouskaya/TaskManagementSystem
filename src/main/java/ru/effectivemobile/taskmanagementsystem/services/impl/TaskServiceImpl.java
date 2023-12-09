@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.effectivemobile.taskmanagementsystem.dto.CreateTaskDto;
+import ru.effectivemobile.taskmanagementsystem.dto.SearchParamsDto;
 import ru.effectivemobile.taskmanagementsystem.dto.StatusDto;
 import ru.effectivemobile.taskmanagementsystem.dto.TaskDto;
 import ru.effectivemobile.taskmanagementsystem.dto.UpdateTaskDto;
@@ -15,6 +16,7 @@ import ru.effectivemobile.taskmanagementsystem.entities.Task;
 import ru.effectivemobile.taskmanagementsystem.entities.User;
 import ru.effectivemobile.taskmanagementsystem.exceptions.InsufficientRightsException;
 import ru.effectivemobile.taskmanagementsystem.repositories.TaskRepository;
+import ru.effectivemobile.taskmanagementsystem.repositories.TaskSearchSpecification;
 import ru.effectivemobile.taskmanagementsystem.services.AuthService;
 import ru.effectivemobile.taskmanagementsystem.services.TaskService;
 import ru.effectivemobile.taskmanagementsystem.services.UserService;
@@ -128,5 +130,11 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
-
+    @Override
+    public List<TaskDto> advancedSearch(SearchParamsDto searchParamsDto, int pageNumber, int pageSize) {
+        TaskSearchSpecification specification = new TaskSearchSpecification(searchParamsDto);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("priority").ascending());
+        List<Task> tasks = taskRepository.findAll(specification, pageable).getContent();
+        return tasks.stream().map(taskConverter::toDto).toList();
+    }
 }

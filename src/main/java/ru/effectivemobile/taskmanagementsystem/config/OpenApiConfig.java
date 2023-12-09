@@ -30,7 +30,10 @@ public class OpenApiConfig {
         return GroupedOpenApi.builder().group("tasks").pathsToMatch("/**/task/**").build();
     }
 
-
+    @Bean
+    public GroupedOpenApi publicCommentApi() {
+        return GroupedOpenApi.builder().group("comments").pathsToMatch("/**/comment/**").build();
+    }
 
     private SecurityScheme createSecurityScheme() {
         return new SecurityScheme().name("Eshop").type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT");

@@ -1,6 +1,7 @@
 package ru.effectivemobile.taskmanagementsystem.services;
 
 import ru.effectivemobile.taskmanagementsystem.dto.CreateTaskDto;
+import ru.effectivemobile.taskmanagementsystem.dto.SearchParamsDto;
 import ru.effectivemobile.taskmanagementsystem.dto.StatusDto;
 import ru.effectivemobile.taskmanagementsystem.dto.TaskDto;
 import ru.effectivemobile.taskmanagementsystem.dto.UpdateTaskDto;
@@ -24,4 +25,6 @@ public interface TaskService {
     TaskDto deletePerformer(int taskId, int performerId) throws InsufficientRightsException;
 
     TaskDto update(UpdateTaskDto taskDto, int id) throws InsufficientRightsException;
+
+    List<TaskDto> advancedSearch(SearchParamsDto searchParamsDto, int pageNumber, int pageSize);
 }

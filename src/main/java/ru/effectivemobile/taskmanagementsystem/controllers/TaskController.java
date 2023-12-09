@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.effectivemobile.taskmanagementsystem.dto.CreateTaskDto;
 import ru.effectivemobile.taskmanagementsystem.dto.PerformersDto;
+import ru.effectivemobile.taskmanagementsystem.dto.SearchParamsDto;
 import ru.effectivemobile.taskmanagementsystem.dto.StatusDto;
 import ru.effectivemobile.taskmanagementsystem.dto.TaskDto;
 import ru.effectivemobile.taskmanagementsystem.dto.UpdateTaskDto;
@@ -282,6 +283,30 @@ public class TaskController {
             return new ResponseEntity<>(taskService.update(updateTaskDto, id), HttpStatus.OK);
         } else {
             throw new ValidationException(bindingResult.getFieldError().getDefaultMessage());
+        }
+    }
+
+    @Operation(
+            summary = "Find tasks by parameters",
+            description = "Find tasks by specific parameters like price and category",
+            tags = {"task"})
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Products was found",
+                    content = @Content(schema = @Schema(contentSchema = TaskDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Products not found - server error"
+            )
+    })
+    @PostMapping("/advancedSearch")
+    public ResponseEntity<List<TaskDto>> advancedSearch(@Valid @RequestBody SearchParamsDto searchParamsDto, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "2") int pageSize, BindingResult result) throws ValidationException {
+        if (!result.hasErrors()) {
+            return new ResponseEntity<>(taskService.advancedSearch(searchParamsDto, pageNumber, pageSize), HttpStatus.OK);
+        } else {
+            throw new ValidationException(result.getFieldError().getDefaultMessage());
         }
     }
 
