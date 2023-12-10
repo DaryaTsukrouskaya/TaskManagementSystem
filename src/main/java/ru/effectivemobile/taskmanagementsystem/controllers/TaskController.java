@@ -125,7 +125,7 @@ public class TaskController {
                     description = "Performed tasks was not found - server error"
             )
     })
-    @GetMapping("/performedBy/{id}")
+    @GetMapping("/performed")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<TaskDto>> getUserPerformedTasks(@RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize) {
         return new ResponseEntity<>(taskService.performedTasks(authService.getPrincipal().get().getId(), pageNumber, pageSize), HttpStatus.OK);
