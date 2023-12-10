@@ -18,6 +18,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer>, JpaSpecifi
 
     List<Task> findByAuthorId(int id, Pageable pageable);
 
-    @Query("select t from Task t join User u where u.id =: performerId")
+    @Query(value = "select t.* from task_management_system.tasks t join task_management_system.tasks_users tu on t.id=tu.task_id join task_management_system.users u on tu.user_id=u.id where u.id = :performerId", nativeQuery = true)
     List<Task> findByPerformers(@Param("performerId") int id, Pageable pageable);
 }

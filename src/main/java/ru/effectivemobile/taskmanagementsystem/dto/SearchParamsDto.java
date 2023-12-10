@@ -15,6 +15,8 @@ public class SearchParamsDto {
     private String title;
     private String description;
     private String status;
-    private String  priority;
+    private String priority;
+    private int authorId;
+    private int performerId;
 
 }

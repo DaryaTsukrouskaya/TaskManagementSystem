@@ -2,11 +2,13 @@ package ru.effectivemobile.taskmanagementsystem.repositories;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 import ru.effectivemobile.taskmanagementsystem.dto.SearchParamsDto;
 import ru.effectivemobile.taskmanagementsystem.entities.Task;
+import ru.effectivemobile.taskmanagementsystem.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,14 @@ public class TaskSearchSpecification implements Specification<Task> {
         if (Optional.ofNullable(searchParams.getStatus()).isPresent() && !searchParams.getStatus().isBlank()) {
             predicate.add(criteriaBuilder.like(root.get("status"), "%" + searchParams.getStatus() + "%"));
         }
+        if (Optional.ofNullable(searchParams.getAuthorId()).isPresent()) {
+            predicate.add(criteriaBuilder.equal(root.get("author_id"), searchParams.getAuthorId()));
+        }
+        if (Optional.ofNullable(searchParams.getPerformerId()).isPresent()) {
+            Join<Task, User> performerJoin = root.join("users");
+            predicate.add(criteriaBuilder.and(criteriaBuilder.equal(performerJoin.get("id"), searchParams.getPerformerId())));
+        }
+
         return criteriaBuilder.and(predicate.toArray(new Predicate[0]));
     }
 }

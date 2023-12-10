@@ -61,9 +61,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> performedTasks(int id, int pageNumber, int pageSize) {
+    public List<TaskDto> performedTasks(int performerId, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("priority").ascending());
-        List<Task> tasks = taskRepository.findByPerformers(id, pageable);
+        List<Task> tasks = taskRepository.findByPerformers(performerId, pageable);
         return tasks.stream().map(taskConverter::toDto).toList();
     }
 
@@ -71,7 +71,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto changeStatus(int taskId, StatusDto newStatus) throws InsufficientRightsException {
         Task task = taskRepository.findById(taskId);
         User user = task.getPerformers().stream().filter(p -> p.getId() == taskId).findFirst().orElse(null);
-        if (user != null) {
+        if (user != null || task.getAuthor().getEmail().equals(authService.getPrincipal().get().getEmail())) {
             task.setStatus(newStatus.getStatus());
             taskRepository.save(task);
             return taskConverter.toDto(task);

@@ -175,7 +175,7 @@ public class TaskController {
     @GetMapping("/performedBy/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<TaskDto>> getPerformedTasksByCertainUser(@PathVariable @Min(value = 0, message =
-            "id задачи не может быть отрицательным") Integer id, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize, BindingResult result) {
+            "id задачи не может быть отрицательным") Integer id, BindingResult result, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize) {
         if (!result.hasErrors()) {
             return new ResponseEntity<>(taskService.performedTasks(id, pageNumber, pageSize), HttpStatus.OK);
         } else {
@@ -302,7 +302,7 @@ public class TaskController {
             )
     })
     @PostMapping("/advancedSearch")
-    public ResponseEntity<List<TaskDto>> advancedSearch(@Valid @RequestBody SearchParamsDto searchParamsDto, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "2") int pageSize, BindingResult result) throws ValidationException {
+    public ResponseEntity<List<TaskDto>> advancedSearch(@Valid @RequestBody SearchParamsDto searchParamsDto, BindingResult result, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "2") int pageSize) throws ValidationException {
         if (!result.hasErrors()) {
             return new ResponseEntity<>(taskService.advancedSearch(searchParamsDto, pageNumber, pageSize), HttpStatus.OK);
         } else {

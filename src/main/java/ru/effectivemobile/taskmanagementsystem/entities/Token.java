@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @Entity
-@Table(name = "refresh_ tokens")
+@Table(name = "refresh_tokens")
 public class Token extends BaseEntity {
     @NotNull
     String token;
