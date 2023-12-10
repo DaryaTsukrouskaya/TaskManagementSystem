@@ -30,7 +30,7 @@ import java.util.List;
 @Data
 @SuperBuilder
 @Entity
-@Table(name = "tasks")
+@Table(name = "users")
 public class User extends BaseEntity {
     @NotBlank(message = "имя не должно быть пустым")
     @Pattern(regexp = "^[а-яА-Яa-zA-Z]+$", message = "некорректное имя")

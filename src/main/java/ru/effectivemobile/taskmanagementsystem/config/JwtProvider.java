@@ -23,7 +23,6 @@ import java.util.Date;
 @Component
 public class JwtProvider {
     private final SecretKey jwtAccessSecret;
-
     private final SecretKey jwtRefreshSecret;
 
     public JwtProvider(@Value("${jwt.secret.access}") String jwtAccessSecret, @Value("${jwt.secret.refresh}") String jwtRefreshSecret) {
