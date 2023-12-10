@@ -37,11 +37,8 @@ public class TaskSearchSpecification implements Specification<Task> {
             predicate.add(criteriaBuilder.like(root.get("status"), "%" + searchParams.getStatus() + "%"));
         }
         if (Optional.ofNullable(searchParams.getAuthorId()).isPresent()) {
-            predicate.add(criteriaBuilder.equal(root.get("author"), searchParams.getAuthorId()));
-        }
-        if (Optional.ofNullable(searchParams.getPerformerId()).isPresent()) {
-            Join<Task, User> performerJoin = root.join("performers");
-            predicate.add(criteriaBuilder.equal(performerJoin.get("id"), searchParams.getPerformerId()));
+            Join<Task, User> authorJoin = root.join("author");
+            predicate.add(criteriaBuilder.equal(authorJoin.get("id"), searchParams.getAuthorId()));
         }
 
         return criteriaBuilder.and(predicate.toArray(new Predicate[0]));
