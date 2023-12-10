@@ -86,7 +86,8 @@ public class TaskServiceImpl implements TaskService {
         if (task.getAuthor().getEmail().equals(authService.getPrincipal().get().getEmail())) {
             List<User> users = userService.findPerformers(newPerformers);
             for (User user : users) {
-                task.getPerformers().add(user);
+                if (!user.getEmail().equals(authService.getPrincipal().get().getEmail()))
+                    task.getPerformers().add(user);
             }
             taskRepository.save(task);
             return taskConverter.toDto(task);
@@ -134,7 +135,6 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDto> advancedSearch(SearchParamsDto searchParamsDto, int pageNumber, int pageSize) {
         TaskSearchSpecification specification = new TaskSearchSpecification(searchParamsDto);
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("priority").ascending());
-        List<Task> tasks = taskRepository.findAll(specification, pageable).getContent();
-        return tasks.stream().map(taskConverter::toDto).toList();
+        return taskRepository.findAll(specification, pageable).stream().map(taskConverter::toDto).toList();
     }
 }

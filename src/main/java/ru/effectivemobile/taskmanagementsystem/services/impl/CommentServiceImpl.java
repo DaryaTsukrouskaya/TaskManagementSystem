@@ -35,10 +35,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDto> getComments(int taskId, int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("date").descending());
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("creationDate").descending());
         return commentRepository.findByTaskId(taskId, pageable).stream().map(commentConverter::toDto).toList();
     }
-
 
 
 }

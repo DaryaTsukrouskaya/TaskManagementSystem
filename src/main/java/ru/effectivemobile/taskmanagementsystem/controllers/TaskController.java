@@ -104,7 +104,7 @@ public class TaskController {
                     description = "Assigned tasks was not found - server error"
             )
     })
-    @GetMapping("/assigned")
+    @GetMapping("/userAssigned")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<TaskDto>> getUserAssignedTasks(@RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize) {
         return new ResponseEntity<>(taskService.assignedTasks(authService.getPrincipal().get().getId(), pageNumber, pageSize), HttpStatus.OK);
@@ -112,7 +112,7 @@ public class TaskController {
 
     @Operation(
             summary = "Find user performed tasks",
-            description = "Find all user performed tasks",
+            description = "Find all tasks performed by user",
             tags = {"task"})
     @ApiResponses(value = {
             @ApiResponse(
@@ -125,15 +125,15 @@ public class TaskController {
                     description = "Performed tasks was not found - server error"
             )
     })
-    @GetMapping("/performed")
+    @GetMapping("/userPerformed")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<TaskDto>> getUserPerformedTasks(@RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize) {
         return new ResponseEntity<>(taskService.performedTasks(authService.getPrincipal().get().getId(), pageNumber, pageSize), HttpStatus.OK);
     }
 
     @Operation(
-            summary = "Find assigned tasks by certain user",
-            description = "Find all assigned tasks by certain user id in the content management system",
+            summary = "Find tasks assigned by certain user",
+            description = "Find all tasks assigned by certain user id in the content management system",
             tags = {"task"})
     @ApiResponses(value = {
             @ApiResponse(
@@ -148,18 +148,13 @@ public class TaskController {
     })
     @GetMapping("/assignedBy/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<TaskDto>> getAssignedTasksByCertainUser(@PathVariable @Min(value = 0, message = "id задачи не может быть отрицательным") Integer id, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize, BindingResult result) {
-        if (!result.hasErrors()) {
-            return new ResponseEntity<>(taskService.assignedTasks(id, pageNumber, pageSize), HttpStatus.OK);
-        } else {
-            throw new ValidationException(result.getFieldError().getDefaultMessage());
-        }
-
+    public ResponseEntity<List<TaskDto>> getAssignedTasksByCertainUser(@PathVariable @Min(value = 0, message = "id задачи не может быть отрицательным") Integer id, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize) {
+        return new ResponseEntity<>(taskService.assignedTasks(id, pageNumber, pageSize), HttpStatus.OK);
     }
 
     @Operation(
-            summary = "Find performed tasks by certain user",
-            description = "Find all performed tasks by certain user id in the content management system",
+            summary = "Find tasks performed by certain user",
+            description = "Find all tasks performed by certain user id in the content management system",
             tags = {"task"})
     @ApiResponses(value = {
             @ApiResponse(
@@ -175,13 +170,8 @@ public class TaskController {
     @GetMapping("/performedBy/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<TaskDto>> getPerformedTasksByCertainUser(@PathVariable @Min(value = 0, message =
-            "id задачи не может быть отрицательным") Integer id, BindingResult result, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize) {
-        if (!result.hasErrors()) {
-            return new ResponseEntity<>(taskService.performedTasks(id, pageNumber, pageSize), HttpStatus.OK);
-        } else {
-            throw new ValidationException(result.getFieldError().getDefaultMessage());
-        }
-
+            "id задачи не может быть отрицательным") Integer id, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize) {
+        return new ResponseEntity<>(taskService.performedTasks(id, pageNumber, pageSize), HttpStatus.OK);
     }
 
     @Operation(
@@ -252,13 +242,8 @@ public class TaskController {
     @PostMapping("/deletePerformer/{taskId}/{performerId}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<TaskDto> deletePerformer(@PathVariable @Min(value = 0, message = "id задачи не может быть отрицательным") int taskId,
-                                                   @PathVariable @Min(value = 0, message = "id исполнителя не может быть отрицательным") int performerId,
-                                                   BindingResult bindingResult) throws InsufficientRightsException {
-        if (!bindingResult.hasErrors()) {
-            return new ResponseEntity<>(taskService.deletePerformer(taskId, performerId), HttpStatus.OK);
-        } else {
-            throw new ValidationException(bindingResult.getFieldError().getDefaultMessage());
-        }
+                                                   @PathVariable @Min(value = 0, message = "id исполнителя не может быть отрицательным") int performerId) throws InsufficientRightsException {
+        return new ResponseEntity<>(taskService.deletePerformer(taskId, performerId), HttpStatus.OK);
     }
 
     @Operation(
@@ -293,12 +278,12 @@ public class TaskController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Products was found",
+                    description = "Tasks was found",
                     content = @Content(schema = @Schema(contentSchema = TaskDto.class))
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Products not found - server error"
+                    description = "Tasks not found - server error"
             )
     })
     @PostMapping("/advancedSearch")

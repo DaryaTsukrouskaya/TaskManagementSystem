@@ -6,17 +6,19 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
-@Data
-@SuperBuilder
 @NoArgsConstructor
+@SuperBuilder
+@Setter
+@Getter
 public class TaskDto {
     private int id;
 

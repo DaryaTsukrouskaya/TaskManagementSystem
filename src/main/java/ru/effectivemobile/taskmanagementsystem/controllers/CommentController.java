@@ -76,11 +76,8 @@ public class CommentController {
             )
     })
     @GetMapping("/getAll/{id}")
-    public ResponseEntity<List<CommentDto>> getCategoryProducts(@PathVariable @Min(value = 0, message = "id задачи не может быть отрицательным") int id, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            return new ResponseEntity<>(commentService.getComments(id, pageNumber, pageSize), HttpStatus.OK);
-        } else {
-            throw new ValidationException(bindingResult.getFieldError().getDefaultMessage());
-        }
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<CommentDto>> getComments(@PathVariable @Min(value = 0, message = "id задачи не может быть отрицательным") int id, @RequestParam(name = "page", defaultValue = "0") int pageNumber, @RequestParam(name = "size", defaultValue = "5") int pageSize) {
+        return new ResponseEntity<>(commentService.getComments(id, pageNumber, pageSize), HttpStatus.OK);
     }
 }
