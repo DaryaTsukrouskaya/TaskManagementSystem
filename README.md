@@ -7,7 +7,7 @@ This is a simple task management system built using Java and Spring Boot.
 To get started with the project, follow the instructions below.
 
 ### Prerequisites
-
+- Mac /Linux /Windows
 - Git
 - Docker
 
