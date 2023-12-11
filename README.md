@@ -26,7 +26,7 @@ This will build and start the application along with any required dependencies.
 
 ## Usage
 
-Once the application is up and running, you can access it by visiting http://localhost:8080 in your web browser. The application provides a simple interface for managing tasks.
+>Once the application is up and running, you can access it by visiting http://localhost:8080/swagger-ui/index.html#/ in your web browser. The application provides a simple interface for managing tasks.
 
 ## Contributing
 
