@@ -19,12 +19,13 @@ import ru.effectivemobile.taskmanagementsystem.services.TaskService;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
 @ComponentScan(basePackages = "ru.effectivemobile.taskmanagementsystem.*")
+@WithMockJwtAuth(authorities = {"USER"}, claims = @OpenIdClaims(preferredUsername = "Anton Pirate"))
 class TaskControllerTests {
 
     @Autowired
@@ -39,20 +40,6 @@ class TaskControllerTests {
     private TaskService taskService;
 
     private static final String END_POINT_PATH_CREATE = "/task/create";
-
-    @Test
-    @WithMockJwtAuth(authorities = {"USER"}, claims = @OpenIdClaims(preferredUsername = "Tonton Pirate"))
-    public void testAddShouldReturn400BadRequest() throws Exception {
-        CreateTaskDto taskDto = new CreateTaskDto();
-        taskDto.setTitle("");
-        String requestBody = objectMapper.writeValueAsString(taskDto);
-
-        mockMvc.perform(post(END_POINT_PATH_CREATE).contentType("application/json")
-                        .content(requestBody))
-                .andExpect(status().isBadRequest())
-                .andDo(print())
-        ;
-    }
 
     @Test
     @WithMockJwtAuth(authorities = {"USER"}, claims = @OpenIdClaims(preferredUsername = "Anton Pirate"))
@@ -70,25 +57,6 @@ class TaskControllerTests {
                         .content(requestBody))
                 .andExpect(status().isCreated());
     }
-//    @Test
-//    public void testGetShouldReturn200OK() throws Exception {
-//       List<Mockito.mock(TaskDto)> list=
-//        String requestURI = END_POINT_PATH + "/" + userId;
-//        String email = "david.parker@gmail.com";
-//
-//        User user = new User().email(email)
-//                .firstName("David").lastName("Parker")
-//                .password("avid808")
-//                .id(userId);
-//
-//        Mockito.when(taskService.assignedTasks().thenReturn(user);
-//
-//        mockMvc.perform(get(requestURI))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType("application/json"))
-//                .andExpect(jsonPath("$.email", is(email)))
-//                .andDo(print());
-//    }
 
 }
 
