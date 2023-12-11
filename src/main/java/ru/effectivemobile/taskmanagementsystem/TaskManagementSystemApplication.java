@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("ru.effectivemobile.taskmanagementsystem.*")
+@EnableJpaRepositories(basePackages = "ru.effectivemobile.taskmanagementsystem.*")
 @EntityScan(basePackages = "ru.effectivemobile.taskmanagementsystem.*")
 public class TaskManagementSystemApplication {
 
