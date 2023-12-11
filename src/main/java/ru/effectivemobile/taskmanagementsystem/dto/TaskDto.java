@@ -6,19 +6,19 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import ru.effectivemobile.taskmanagementsystem.entities.Comment;
-import ru.effectivemobile.taskmanagementsystem.entities.User;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
-@Data
-@SuperBuilder
 @NoArgsConstructor
+@SuperBuilder
+@Setter
+@Getter
 public class TaskDto {
     private int id;
 
@@ -34,7 +34,7 @@ public class TaskDto {
     @NotBlank(message = "статус задачи не должен быть пустым")
     private String status;
 
-    @Pattern(regexp = "^[а-яА-Яa-zA-Z]+$", message = "некорректный ghbjhbntn")
+    @Pattern(regexp = "^[а-яА-Яa-zA-Z]+$", message = "некорректный приоритет")
     @NotBlank(message = "приоритет задачи не должен быть пустым")
     private String priority;
     @Past(message = "указанная дата  еще не наступила")

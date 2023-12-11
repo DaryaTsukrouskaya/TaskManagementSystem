@@ -1,5 +1,6 @@
 package ru.effectivemobile.taskmanagementsystem.dto.converters;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import ru.effectivemobile.taskmanagementsystem.dto.TaskDto;
 import ru.effectivemobile.taskmanagementsystem.entities.Task;
@@ -14,7 +15,7 @@ public class TaskConverter {
     private final CommentConverter commentConverter;
     private final UserRepository userRepository;
 
-    public TaskConverter(UserConverter userConverter, CommentConverter commentConverter, UserRepository userRepository) {
+    public TaskConverter(@Lazy UserConverter userConverter, CommentConverter commentConverter, UserRepository userRepository) {
         this.userConverter = userConverter;
         this.commentConverter = commentConverter;
         this.userRepository = userRepository;

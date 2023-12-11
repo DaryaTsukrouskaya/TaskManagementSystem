@@ -5,6 +5,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,12 +26,17 @@ public class JwtFilter extends GenericFilterBean {
     public static final String AUTHORIZATION = "Authorization";
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
-    private final PasswordEncoder encoder;
+    private PasswordEncoder encoder;
 
-    public JwtFilter(UserRepository userRepository, JwtProvider jwtProvider, PasswordEncoder encoder) {
+    @Autowired
+    @Lazy
+    public void setEncoder(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
+
+    public JwtFilter(UserRepository userRepository, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.jwtProvider = jwtProvider;
-        this.encoder = encoder;
     }
 
     @Override

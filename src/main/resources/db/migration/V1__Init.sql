@@ -1,3 +1,4 @@
+create schema if not exists task_management_system;
 create table if not exists task_management_system.users(
     id int not null auto_increment,
     name varchar(20) not null,
@@ -58,7 +59,7 @@ create table if not exists task_management_system.comments(
     on delete cascade
     on update cascade);
 
-    create table if not exists  task_management_system.refresh_tokens(
+create table if not exists  task_management_system.refresh_tokens(
     id INT PRIMARY KEY AUTO_INCREMENT,
     token VARCHAR(300) NOT NULL,
     username VARCHAR(64) NOT NULL,
