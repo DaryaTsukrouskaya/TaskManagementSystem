@@ -9,7 +9,7 @@ To get started with the project, follow the instructions below.
 ### Prerequisites
 - Mac /Linux /Windows
 - Git
-- Docker
+- IDE
 
 ### Downloading the Project
 
@@ -18,11 +18,13 @@ Clone the repository from GitHub using the following command:
 >$ git clone https://github.com/DaryaTsukrouskaya/TaskManagementSystem.git
 
 ### Running the Project
+- Open the cloned project in your chosen development environment.
 
-Navigate to the project directory and run the following command to start the application using Docker Compose:
->$docker-compose up
+- Set up the project and its dependencies, if necessary.
 
-This will build and start the application along with any required dependencies.
+- Find the main project class that contains the main() method.
+
+- Run the project by clicking on the "Run" button in your development environment.
 
 ## Usage
 
